@@ -1,4 +1,4 @@
-sw_package.set_src("main.c")
+#sw_package.set_src("main.c")
 sw_package.set_version("rev_0_0_0")
 
 sw_package.set_src("startup/init.s startup/sfr.s")

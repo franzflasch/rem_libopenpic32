@@ -1,0 +1,2 @@
+sw_package.set_src("main_blinky.c")
+sw_package.set_dep("libopenpic32")

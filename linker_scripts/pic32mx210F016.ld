@@ -5,7 +5,10 @@
  * See device documentation.
  */
 
-OUTPUT_FORMAT("elf32-little")
+/* Important to use elf32-tradlittlemips, if set to other format strange effects occure when linking:
+ * undefined symbols are simply ignored when using elf32-little, no idea why
+ */
+OUTPUT_FORMAT("elf32-tradlittlemips")
 OUTPUT_ARCH("mips")
 ENTRY(_reset)
 

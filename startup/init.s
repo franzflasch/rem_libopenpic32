@@ -124,6 +124,7 @@ _init_check:
     */
    and $a0, $a0, 0
    and $a1, $a1, 0
-   j main
+   la $t0,main
+   jr $t0
    nop   
    .end _startup
