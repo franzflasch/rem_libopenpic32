@@ -15,7 +15,11 @@ No optimization limits! Also builds with -Os! ;) No need to use the microchip mo
 
 
 REM command to build:
+```Shell
 rem ARCH=mips MACH=pic32mx2 PROJECT_FOLDER="rem_libopenpic32" package:libopenpic32_blinky:image[srec] VERBOSE=1
+```
 
 To flash it to your mcu:
+```Shell
 pic32prog rem_workdir/mips_pic32mx2/deploy/libopenpic32_blinky_nohash/libopenpic32_blinky.srec
+```
