@@ -12,3 +12,10 @@ It can be built with the Codescape mips-mti-elf bare metal toolchain which is fr
 https://community.imgtec.com/developers/mips/tools/codescape-mips-sdk/download-codescape-mips-sdk-essentials/
 
 No optimization limits! Also builds with -Os! ;) No need to use the microchip modified gcc, which is just utter crap.
+
+
+REM command to build:
+rem ARCH=mips MACH=pic32mx2 PROJECT_FOLDER="rem_libopenpic32" package:libopenpic32_blinky:image[srec] VERBOSE=1
+
+To flash it to your mcu:
+pic32prog rem_workdir/mips_pic32mx2/deploy/libopenpic32_blinky_nohash/libopenpic32_blinky.srec
