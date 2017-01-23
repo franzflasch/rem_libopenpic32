@@ -3,6 +3,8 @@ sw_package.set_version("rev_0_0_0")
 
 sw_package.set_src("startup/init.s startup/sfr.s")
 sw_package.set_src("lib/src/coretimer.c")
+sw_package.set_src("lib/src/common/sys.c")
 
 sw_package.set_inc("lib/inc/mx2 lib/inc")
+sw_package.set_inc("lib/inc/mx2 lib/inc/common")
 sw_package.set_linker_script("linker_scripts/pic32mx210F016.ld")
