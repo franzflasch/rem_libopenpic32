@@ -1,10 +1,27 @@
-#sw_package.set_src("main.c")
 sw_package.set_version("rev_0_0_0")
 
-sw_package.set_src("startup/init.s startup/sfr.s")
+sw_package.set_inc("lib/inc/common")
+sw_package.set_inc("lib/inc")
 sw_package.set_src("lib/src/coretimer.c")
-sw_package.set_src("lib/src/common/sys.c")
 
-sw_package.set_inc("lib/inc/mx2 lib/inc")
-sw_package.set_inc("lib/inc/mx2 lib/inc/common")
-sw_package.set_linker_script("linker_scripts/pic32mx210F016.ld")
+sw_package.set_inc("startup/include")
+sw_package.set_src("startup/init.S")
+sw_package.set_src("startup/c_init.S")
+
+if global_config.get_mach() == "pic32mx2"
+    sw_package.set_inc("lib/inc/mx2")
+    sw_package.set_src("startup/mx2/sfr.s")
+    sw_package.set_linker_script("linker_scripts/pic32mx210F016.ld")
+end
+
+if global_config.get_mach() == "pic32mz2048"
+    sw_package.set_def("IS_PIC32MZ")
+
+    sw_package.set_src("startup/init_caches.S")
+    sw_package.set_src("startup/init_tlb.S")
+
+    sw_package.set_inc("startup/mz2048")
+    sw_package.set_inc("lib/inc/mz2048")
+    sw_package.set_src("startup/mz2048/sfr.s")
+    sw_package.set_linker_script("linker_scripts/PIC32MZ2048.ld")
+end

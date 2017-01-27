@@ -10,7 +10,8 @@
  */
 
 #include <stdint.h>
-#include "mx2/sfr.h"
+#include <sfr.h>
+ 
 #include "mx2/config.h"
 #include "coretimer.h"
 

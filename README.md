@@ -13,6 +13,9 @@ https://community.imgtec.com/developers/mips/tools/codescape-mips-sdk/download-c
 
 No optimization limits! Also builds with -Os! ;) No need to use the microchip modified gcc, which is just utter crap.
 
+Parts of this library are taken from https://github.com/jasonkajita/pic32-part-support and https://imagination-technologies-cloudfront-assets.s3.amazonaws.com/documentation/MD00901-2B-CPS-APP-01.03.pdf
+
+## Now with support for PIC32MZ2048! Please see https://github.com/franzflasch/rem_test_project to build a simple blinky project!
 
 REM command to build:
 ```Shell

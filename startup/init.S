@@ -1,3 +1,4 @@
+#include <boot.h>
 
    /*
     * Reset vector.
@@ -55,46 +56,33 @@ _is_a_reset:
    wrpgpr  $gp,$gp                  /* Change $gp in shadow registers as well */
    mtc0    $t3, $12, 2    
 
-   /*
-    * Clean up BSS memory.
-    * All uninitialized variables will have the value zero.
-    * BSS limits in memory are chosen by the linker (_fbss, _ebss).
-    */
-   la $t0, _fbss
-   la $t1, _ebss
-   b _bss_check
+#ifdef IS_PIC32MZ
+   /***************** CACHES INITIALIZATION ***********/
+
+   la   $a2, init_tlb    # Generate unique EntryHi contents per entry pair.
+   jalr $a2
    nop
 
-_bss_init:
-   sw $0, 0x0($t0)
-   sw $0, 0x4($t0)
-   sw $0, 0x8($t0)
-   sw $0, 0xc($t0)
-   addu $t0, 16
-
-_bss_check:
-   bltu    $t0, $t1, _bss_init
+   la   $a2, init_icache # Initialize the L1 instruction cache. (Executing using I$ on return.)
+   jalr $a2
    nop
 
-   /*
-    * Setup initialized variables in RAM memory.
-    * Copy initial values from Flash (.rodata) to RAM (.data).
-    * DATA limits are chosen by the linker (_fdata, _edata).
-    */
-   la $t0, _fimage
-   la $t1, _fdata
-   la $t2, _edata
-   b _init_check
+   // The changing of Kernel mode cacheability must be done from KSEG1
+   // Since the code is executing from KSEG0 It needs to do a jump to KSEG1 change K0 and jump back to KSEG0
+   la   $a2, change_k0_cca
+   li   $a1, 0xf
+   ins  $a2, $a1, 29, 1 // changed to KSEG1 address by setting bit 29
+   jalr $a2
    nop
 
-_init_data:
-   lw $t3, ($t0)
-   sw $t3, ($t1)
-   addu $t0, 4
-   addu $t1, 4
+   la   $a2, init_dcache # Initialize the L1 data cache
+   jalr $a2
+   nop
+#endif
+   /***************** PREPARATION for "C" ***********/
 
-_init_check:
-   bltu $t1, $t2, _init_data
+   la $a2,     copy_c2_ram # Copy "C" code and data to RAM and zero bss (uncached.)
+   jalr $a2
    nop
 
    /*
